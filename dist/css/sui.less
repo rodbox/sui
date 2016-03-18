@@ -1,0 +1,188 @@
+// color
+@bgColor: #242424;
+@cColor: #F4F4F4;
+
+@bgHeader: lighten(@bgColor, 10%);
+@bgSidebar: lighten(@bgColor, 20%);
+@bgQuickbar: lighten(@bgColor, 30%);
+@bgDefault: lighten(@bgColor, 40%);
+@bgFooter: lighten(@bgColor, 50%);
+
+// Size
+@headerH: 54px;
+
+@HDefault: calc(~'100vh - '@headerH); // height when sui-footer = false
+@HFooter: calc(~'50vh - '@headerH); // height when sui-footer = true
+
+@sidebarW: 250;
+@sidebarWUnit: px;
+@sidebarH: @HDefault;
+
+
+@defaultW: 100%;
+@defaultH: @HDefault;
+
+@quickbarW: unit(@sidebarW,@sidebarWUnit);
+@quickbarH: @sidebarH;
+
+@footerH: 50vh;
+@footerW: 100%;
+
+@position: fixed;
+
+
+//
+// FUNCTION
+//
+.animate(@time : 175,@type:linear,@delay:0s){
+    -webkit-transition: all unit(@time,ms) @type;
+    -moz-transition: all unit(@time,ms) @type;
+    -ms-transition: all unit(@time,ms) @type;
+    -o-transition: all unit(@time,ms) @type;
+    transition: all unit(@time,ms) @type;
+
+    -webkit-transition-delay: @delay;
+    -moz-transition-delay: @delay;
+    -ms-transition-delay: @delay;
+    -o-transition-delay: @delay;
+    transition-delay: @delay;
+}
+.transX(@X){
+    -moz-transform: translateX(@X);
+    -webkit-transform: translateX(@X);
+    -o-transform: translateX(@X);
+    -ms-transform: translateX(@X);
+    transform: translateX(@X);
+}
+.transY(@Y){
+    -moz-transform: translateY(@Y);
+    -webkit-transform: translateY(@Y);
+    -o-transform: translateY(@Y);
+    -ms-transform: translateY(@Y);
+    transform: translateY(@Y);
+}
+
+//
+// END : FUNCTION
+//
+
+
+// default
+
+// sidebar
+
+// quickbar
+
+// footer
+
+.sui-default,
+.sui-quickbar,
+.sui-sidebar,
+.sui-footer
+{
+    overflow-y: auto;
+    .animate();
+}
+
+.sui-sidebar{
+    width: unit(@sidebarW,@sidebarWUnit);
+    height: @sidebarH;
+
+    position:@position;
+    left:0px;
+    top:@headerH;
+
+    background-color: @bgSidebar;
+    color:@cColor;
+
+    .transX(unit(0-@sidebarW,@sidebarWUnit));
+}
+
+.sui-default{
+    width:@defaultW;
+    height:@defaultH;
+    background-color: @bgDefault;
+    color:@cColor;
+    position:@position;
+}
+
+.sui-quickbar{
+    width: @quickbarW;
+    height: @quickbarH;
+
+    position:@position;
+    right:0px;
+    top:@headerH;
+
+    background-color: @bgQuickbar;
+    color:@cColor;
+
+    .transX(@quickbarW);
+}
+
+.sui-footer{
+    width:100%;
+    height:@footerH;
+    position:@position;
+    bottom:0px;
+
+    display:block;
+
+    background-color: @bgFooter;
+    color:@cColor;
+
+    .transY(@footerH);
+}
+
+
+
+// SUI Context
+
+// FOOTER OPEN
+[data-sui-footer="true"]{
+    .sui-footer{
+        .transY(0px);
+    }
+    .sui-default,
+    .sui-sidebar,
+    .sui-quickbar{
+        height: @HFooter;
+    }
+}
+
+// SIDEBAR OPEN
+[data-sui-sidebar="true"]{
+    .sui-sidebar{
+        .transX(0px);
+    }
+    .sui-default{
+        .transX(unit(@sidebarW,@sidebarWUnit));
+        width: calc(~"100% - "unit(@sidebarW,@sidebarWUnit));
+    }
+}
+
+// QUICKBAR OPEN
+[data-sui-quickbar="true"]{
+    .sui-quickbar{
+        .transX(0px);
+    }
+    .sui-default{
+        width: calc(~"100% - "@quickbarW) !important;
+    }
+    // QUICKBAR OPEN & SIDEBAR OPEN
+    &[data-sui-sidebar="true"]{
+        .sui-default{
+            width: calc(~"100% - "unit(@sidebarW + @quickbarW,@sidebarWUnit)) !important;
+        }
+    }
+}
+
+
+//
+// FOR DEMO
+//
+.btn-sui{
+    &.active{
+        background-color: rgba(255,255,255, 0.2) !important;
+    }
+}

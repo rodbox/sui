@@ -1,0 +1,22 @@
+{
+  "name": "sui",
+  "authors": [
+    "rodbox <jacquemin.rodolphe@hotmail.fr>"
+  ],
+  "description": "Adapte le contexte de navigation et le garde en session.",
+  "main": "/dist/js/sui.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "UI",
+    "web",
+    "session"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.2",
+    "font-awesome": "^4.5.0"
+  }
+}
